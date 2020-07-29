@@ -24,37 +24,21 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="name">Nome</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            formControlName="name"
-          />
+          <input type="text" class="form-control" id="name" formControlName="name" />
 
-          <div
-            class="text-danger"
-            *ngIf="
+          <div class="text-danger" *ngIf="
               categoryForm.get('name').invalid &&
               categoryForm.get('name').touched
-            "
-          >
-            <span *ngIf="categoryForm.get('name').errors.required"
-              >O campo nome é obrigatório</span
-            >
-            <span *ngIf="categoryForm.get('name').errors.minlength"
-              >O campo nome precisa ter pelo menos 3 caracteres</span
-            >
+            ">
+            <span *ngIf="categoryForm.get('name').errors.required">O campo nome é obrigatório</span>
+            <span *ngIf="categoryForm.get('name').errors.minlength">O campo nome precisa ter pelo menos 3
+              caracteres</span>
           </div>
         </div>
 
         <div class="form-group col-md-8">
           <label for="description">Descrição</label>
-          <input
-            type="text"
-            class="form-control"
-            id="description"
-            formControlName="description"
-          />
+          <input type="text" class="form-control" id="description" formControlName="description" />
         </div>
       </div>
     </div>
@@ -67,11 +51,7 @@
     </ul>
   </div>
 
-  <button
-    [disabled]="submittingForm || categoryForm.invalid"
-    type="submit"
-    class="btn btn-primary float-right"
-  >
+  <button [disabled]="submittingForm || categoryForm.invalid" type="submit" class="btn btn-primary float-right">
     Salvar
   </button>
   <a routerLink="/categories" class="btn btn-light float-right mr-2">Voltar</a>
