@@ -1,0 +1,158 @@
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+    <li class="breadcrumb-item"><a routerLink="/entries">Lançamentos</a></li>
+    <li class="breadcrumb-item active">{{ pageTitle }}</li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+    <h1 class="h2 border-left pl-2">
+      {{ pageTitle }}
+    </h1>
+  </div>
+</div>
+
+<form [formGroup]="entryForm" (submit)="submitForm()">
+  <div class="card mb-3">
+    <div class="card-header">
+      Informações sobre o lançamento
+    </div>
+
+    <div class="card-body">
+      <div class="form-row">
+        <!-- TIPO -->
+        <div class="form-group col-md-3">
+          <label for="type">Tipo</label>
+
+          <select name="type" id="type" formControlName="type" class="form-control">
+            <option *ngFor="let option of typeOptions" [value]="option.value">{{option.text}}</option>
+          </select>
+
+          <div class="text-danger" *ngIf="
+              entryForm.get('type').invalid && entryForm.get('type').touched
+            ">
+            <span *ngIf="entryForm.get('type').errors.required">O campo tipo é obrigatório</span>
+          </div>
+        </div>
+
+        <!-- CATEGORIA -->
+        <div class="form-group col-md-3">
+          <label for="categoryId">Categoria</label>
+
+          <select name="categoryId" id="categoryId" formControlName="categoryId" class="form-control">
+            <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+          </select>
+
+          <div class="text-danger" *ngIf="
+              entryForm.get('categoryId').invalid && entryForm.get('categoryId').touched
+            ">
+            <span *ngIf="entryForm.get('categoryId').errors.required">O campo categoria é obrigatório</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-row">
+        <!-- DATA -->
+        <div class="form-group col-md-3">
+          <label for="date">Data</label>
+
+          <p-calendar id="date" formControlName="date" inputStyleClass="form-control" dataType="string"
+            dateFormat="dd/mm/yy" [locale]="ptBR" [showButtonBar]="true"></p-calendar>
+
+          <div class="text-danger" *ngIf="
+              entryForm.get('date').invalid && entryForm.get('date').touched
+            ">
+            <span *ngIf="entryForm.get('date').errors.required">
+              O campo data é obrigatório
+            </span>
+          </div>
+        </div>
+
+        <!-- VALOR  -->
+        <div class="form-group col-md-3">
+          <label for="amount">Valor</label>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                R$
+              </div>
+
+              <input [imask]="imaskConfig" type="text" class="form-control text-right" id="amount"
+                formControlName="amount" />
+            </div>
+          </div>
+
+          <div class="text-danger" *ngIf="entryForm.get('amount').invalid && entryForm.get('amount').touched">
+            <span *ngIf="entryForm.get('amount').errors.required">
+              O campo valor é obrigatório
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+
+        <!-- PAGO -->
+        <div class="form-group col-md-3">
+          <label for="paid">Situação</label>
+
+          <div class="btn-group w-100">
+            <label [class.active]="entryForm.get('paid').value === true" class="btn btn-outline-info"
+              (click)="entryForm.get('paid').setValue(true)">
+              Pago
+            </label>
+            <label [class.active]="entryForm.get('paid').value === false" class="btn btn-outline-info"
+              (click)="entryForm.get('paid').setValue(false)">
+              Pendente
+            </label>
+          </div>
+
+          <div class="text-danger" *ngIf="
+              entryForm.get('paid').invalid && entryForm.get('paid').touched
+            ">
+            <span *ngIf="entryForm.get('paid').errors.required">O campo pago é obrigatório</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- LANÇAMENTO -->
+        <div class="form-group col-md-6">
+          <label for="name">Lançamento</label>
+          <input type="text" class="form-control" id="name" formControlName="name" />
+
+          <div class="text-danger" *ngIf="
+              entryForm.get('name').invalid && entryForm.get('name').touched
+            ">
+            <span *ngIf="entryForm.get('name').errors.required">O campo nome é obrigatório</span>
+            <span *ngIf="entryForm.get('name').errors.minlength">O campo nome precisa ter pelo menos 3 caracteres</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- DESCRIÇÃO  -->
+        <div class="form-group col-md-6">
+          <label for="description">Descrição</label>
+          <input type="text" class="form-control" id="description" formControlName="description" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger mb-3" *ngIf="serverErrorMessages">
+    <strong>Erros no servidor:</strong>
+    <ul>
+      <li *ngFor="let error of serverErrorMessages">{{ error }}</li>
+    </ul>
+  </div>
+
+  <button [disabled]="submittingForm || entryForm.invalid" type="submit" class="btn btn-primary float-right">
+    Salvar
+  </button>
+  <a routerLink="/entries" class="btn btn-light float-right mr-2">Voltar</a>
+</form>
