@@ -175,6 +175,9 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
 
   private createEntry() {
     const entry: Entry = Object.assign(new Entry(), this.entryForm.value);
+    entry.category = this.categories.find(
+      (cat) => cat.id === Number(entry.categoryId)
+    );
 
     this.entryService.create(entry).subscribe(
       (entry) => this.actionsForSuccess(entry),
@@ -184,6 +187,9 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
 
   private updateEntry() {
     const entry: Entry = Object.assign(new Entry(), this.entryForm.value);
+    entry.category = this.categories.find(
+      (cat) => cat.id === Number(entry.categoryId)
+    );
 
     this.entryService.update(entry).subscribe(
       (entry) => this.actionsForSuccess(entry),
