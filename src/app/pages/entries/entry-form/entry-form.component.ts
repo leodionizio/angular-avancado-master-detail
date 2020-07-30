@@ -1,25 +1,25 @@
-import { Component, OnInit, AfterContentChecked } from "@angular/core";
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { Entry } from "../shared/entry.model";
-import { EntryService } from "../shared/entry.service";
-import { Category } from "../../categories/shared/category.model";
+import { Entry } from '../shared/entry.model';
+import { EntryService } from '../shared/entry.service';
+import { Category } from '../../categories/shared/category.model';
 
-import { switchMap } from "rxjs/operators";
+import { switchMap } from 'rxjs/operators';
 
-import toastr from "toastr";
-import { CategoryService } from "../../categories/shared/category.service";
+import toastr from 'toastr';
+import { CategoryService } from '../../categories/shared/category.service';
 
 @Component({
-  selector: "app-entry-form",
-  templateUrl: "./entry-form.component.html",
-  styleUrls: ["./entry-form.component.scss"],
+  selector: 'app-entry-form',
+  templateUrl: './entry-form.component.html',
+  styleUrls: ['./entry-form.component.scss'],
 })
 export class EntryFormComponent implements OnInit, AfterContentChecked {
   currentAction: string;
@@ -34,55 +34,55 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   imaskConfig = {
     mask: Number,
     scale: 2,
-    thousandsSeparator: "",
+    thousandsSeparator: '',
     padFractionalZeros: true,
     normalizeZeros: true,
-    radix: ",",
+    radix: ',',
   };
 
   ptBR = {
     FirstDayOfWeek: 0,
     dayNames: [
-      "Domingo",
-      "Segunda",
-      "Terça",
-      "Quarta",
-      "Quinta",
-      "Sexta",
-      "Sábado",
+      'Domingo',
+      'Segunda',
+      'Terça',
+      'Quarta',
+      'Quinta',
+      'Sexta',
+      'Sábado',
     ],
-    dayNamesShort: ["Dom", "Seg", "Ter", "Quar", "Qui", "Sex", "Sab"],
-    dayNamesMin: ["Do", "Se", "Te", "Qu", "Qu", "Se", "Sa"],
+    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Quar', 'Qui', 'Sex', 'Sab'],
+    dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qu', 'Se', 'Sa'],
     monthNames: [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
     ],
     monthNamesShort: [
-      "Jan",
-      "Fev",
-      "Mar",
-      "Abr",
-      "Mai",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Set",
-      "Out",
-      "Nov",
-      "Dez",
+      'Jan',
+      'Fev',
+      'Mar',
+      'Abr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez',
     ],
-    today: "Hoje",
-    clear: "Limpar",
+    today: 'Hoje',
+    clear: 'Limpar',
   };
 
   constructor(
@@ -108,7 +108,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   submitForm() {
     this.submittingForm = true;
 
-    if (this.currentAction === "new") {
+    if (this.currentAction === 'new') {
       this.createEntry();
     } else {
       this.updateEntry();
@@ -126,7 +126,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
 
   private setCurrentAction() {
     this.currentAction =
-      this.route.snapshot.url[0].path === "new" ? "new" : "edit";
+      this.route.snapshot.url[0].path === 'new' ? 'new' : 'edit';
   }
 
   private buildEntryForm() {
@@ -134,7 +134,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       id: [null],
       name: [null, [Validators.required, Validators.minLength(3)]],
       description: [null],
-      type: ["expense", [Validators.required]],
+      type: ['expense', [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
       paid: [true, [Validators.required]],
@@ -143,17 +143,17 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private loadEntry() {
-    if (this.currentAction === "edit") {
+    if (this.currentAction === 'edit') {
       this.route.paramMap
         .pipe(
-          switchMap((params) => this.entryService.getById(+params.get("id")))
+          switchMap((params) => this.entryService.getById(+params.get('id')))
         )
         .subscribe(
           (entry) => {
             this.entry = entry;
             this.entryForm.patchValue(entry);
           },
-          (error) => alert("Servidor instável!")
+          (error) => alert('Servidor instável!')
         );
     }
   }
@@ -165,16 +165,16 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private setPageTitle() {
-    if (this.currentAction === "new") {
-      this.pageTitle = "Cadastro de novo lançamento";
+    if (this.currentAction === 'new') {
+      this.pageTitle = 'Cadastro de novo lançamento';
     } else {
-      const entryName = this.entry.name || "";
+      const entryName = this.entry.name || '';
       this.pageTitle = `Editando lançamento ${entryName}`;
     }
   }
 
   private createEntry() {
-    const entry: Entry = Object.assign(new Entry(), this.entryForm.value);
+    const entry: Entry = Entry.fromJson(this.entryForm.value);
     entry.category = this.categories.find(
       (cat) => cat.id === Number(entry.categoryId)
     );
@@ -186,7 +186,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private updateEntry() {
-    const entry: Entry = Object.assign(new Entry(), this.entryForm.value);
+    const entry: Entry = Entry.fromJson(this.entryForm.value);
     entry.category = this.categories.find(
       (cat) => cat.id === Number(entry.categoryId)
     );
@@ -198,15 +198,15 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private actionsForSuccess(entry: Entry) {
-    toastr.success("Solicitação processada com sucesso!");
+    toastr.success('Solicitação processada com sucesso!');
 
     this.router
-      .navigateByUrl("entries", { skipLocationChange: true })
-      .then(() => this.router.navigate(["entries", entry.id, "edit"]));
+      .navigateByUrl('entries', { skipLocationChange: true })
+      .then(() => this.router.navigate(['entries', entry.id, 'edit']));
   }
 
   private actionsForError(error) {
-    toastr.error("Ocorreu um erro ao processar sua solicitação!");
+    toastr.error('Ocorreu um erro ao processar sua solicitação!');
 
     this.submittingForm = false;
 
@@ -214,7 +214,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       this.serverErrorMessages = JSON.parse(error._body).errors;
     } else {
       this.serverErrorMessages = [
-        "Falha na comunicação com servidor. Por favor, tente mais tarde!",
+        'Falha na comunicação com servidor. Por favor, tente mais tarde!',
       ];
     }
   }
