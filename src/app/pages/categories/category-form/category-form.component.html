@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<form [formGroup]="categoryForm" (submit)="submitForm()">
+<form [formGroup]="resourceForm" (submit)="submitForm()">
   <div class="card mb-3">
     <div class="card-header">
       Informações sobre a categoria
@@ -27,11 +27,11 @@
           <input type="text" class="form-control" id="name" formControlName="name" />
 
           <div class="text-danger" *ngIf="
-              categoryForm.get('name').invalid &&
-              categoryForm.get('name').touched
+              resourceForm.get('name').invalid &&
+              resourceForm.get('name').touched
             ">
-            <span *ngIf="categoryForm.get('name').errors.required">O campo nome é obrigatório</span>
-            <span *ngIf="categoryForm.get('name').errors.minlength">O campo nome precisa ter pelo menos 3
+            <span *ngIf="resourceForm.get('name').errors.required">O campo nome é obrigatório</span>
+            <span *ngIf="resourceForm.get('name').errors.minlength">O campo nome precisa ter pelo menos 3
               caracteres</span>
           </div>
         </div>
@@ -51,7 +51,7 @@
     </ul>
   </div>
 
-  <button [disabled]="submittingForm || categoryForm.invalid" type="submit" class="btn btn-primary float-right">
+  <button [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary float-right">
     Salvar
   </button>
   <a routerLink="/categories" class="btn btn-light float-right mr-2">Voltar</a>

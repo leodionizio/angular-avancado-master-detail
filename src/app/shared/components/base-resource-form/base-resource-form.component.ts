@@ -1,5 +1,5 @@
 import { OnInit, AfterContentChecked, Injector } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { switchMap } from 'rxjs/operators';
@@ -9,8 +9,7 @@ import toastr from 'toastr';
 import { BaseResourceModel } from '../../models/base.model';
 import { BaseResourceService } from '../../services/base-resource.service';
 
-export abstract class BaseResourceFormComponent<T extends BaseResourceModel>
-  implements OnInit, AfterContentChecked {
+export abstract class BaseResourceFormComponent<T extends BaseResourceModel> implements OnInit, AfterContentChecked {
   currentAction: string;
   resourceForm: FormGroup;
   pageTitle: string;
