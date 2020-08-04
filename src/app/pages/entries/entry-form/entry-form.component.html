@@ -1,10 +1,4 @@
-<nav class="mb-5">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-    <li class="breadcrumb-item"><a routerLink="/entries">Lançamentos</a></li>
-    <li class="breadcrumb-item active">{{ pageTitle }}</li>
-  </ol>
-</nav>
+<app-breadcrumb [items]="[{ text: 'Lançamentos', link: '/entries' },{ text: pageTitle }]"></app-breadcrumb>
 
 <div class="row mb-4">
   <div class="col-md">
@@ -41,7 +35,8 @@
         <div class="form-group col-md-3">
           <label for="categoryId">Categoria</label>
 
-          <select name="categoryId" id="categoryId" formControlName="categoryId" class="form-control" (change)="selectCategory()">
+          <select name="categoryId" id="categoryId" formControlName="categoryId" class="form-control"
+            (change)="selectCategory()">
             <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
           </select>
 
@@ -129,7 +124,8 @@
               resourceForm.get('name').invalid && resourceForm.get('name').touched
             ">
             <span *ngIf="resourceForm.get('name').errors.required">O campo nome é obrigatório</span>
-            <span *ngIf="resourceForm.get('name').errors.minlength">O campo nome precisa ter pelo menos 3 caracteres</span>
+            <span *ngIf="resourceForm.get('name').errors.minlength">O campo nome precisa ter pelo menos 3
+              caracteres</span>
           </div>
         </div>
       </div>

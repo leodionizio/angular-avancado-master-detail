@@ -14,8 +14,7 @@ import { CategoryService } from '../../categories/shared/category.service';
   templateUrl: './entry-form.component.html',
   styleUrls: ['./entry-form.component.scss'],
 })
-export class EntryFormComponent extends BaseResourceFormComponent<Entry>
-  implements OnInit {
+export class EntryFormComponent extends BaseResourceFormComponent<Entry> implements OnInit {
   categories: Category[] = null;
   typeOptions: any[] = [];
 
