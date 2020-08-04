@@ -1,12 +1,6 @@
 <app-breadcrumb [items]="[{ text: 'Categorias', link: '/categories' },{ text: pageTitle }]"></app-breadcrumb>
 
-<div class="row mb-4">
-  <div class="col-md">
-    <h1 class="h2 border-left pl-2">
-      {{ pageTitle }}
-    </h1>
-  </div>
-</div>
+<app-page-header [page-title]="pageTitle" button-class="btn-light" button-link="/categories" button-text="<< Voltar"></app-page-header>
 
 <form [formGroup]="resourceForm" (submit)="submitForm()">
   <div class="card mb-3">
@@ -48,5 +42,4 @@
   <button [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary float-right">
     Salvar
   </button>
-  <a routerLink="/categories" class="btn btn-light float-right mr-2">Voltar</a>
 </form>

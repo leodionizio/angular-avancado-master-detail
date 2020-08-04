@@ -4,10 +4,20 @@ import { RouterModule } from '@angular/router';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
 
 @NgModule({
-  declarations: [BreadcrumbComponent],
+  declarations: [BreadcrumbComponent, PageHeaderComponent],
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  exports: [CommonModule, ReactiveFormsModule, BreadcrumbComponent, RouterModule],
+  exports: [
+    // shared modules
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+
+    // shared components
+    BreadcrumbComponent,
+    PageHeaderComponent,
+  ],
 })
 export class SharedModule {}
