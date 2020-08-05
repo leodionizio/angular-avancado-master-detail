@@ -1,6 +1,7 @@
 <app-breadcrumb [items]="[{ text: 'Lançamentos', link: '/entries' },{ text: pageTitle }]"></app-breadcrumb>
 
-<app-page-header [page-title]="pageTitle" button-class="btn-light" button-link="/entries" button-text="<< Voltar"></app-page-header>
+<app-page-header [page-title]="pageTitle" button-class="btn-light" button-link="/entries" button-text="<< Voltar">
+</app-page-header>
 
 
 <form [formGroup]="resourceForm" (submit)="submitForm()">
@@ -19,11 +20,7 @@
             <option *ngFor="let option of typeOptions" [value]="option.value">{{option.text}}</option>
           </select>
 
-          <div class="text-danger" *ngIf="
-              resourceForm.get('type').invalid && resourceForm.get('type').touched
-            ">
-            <span *ngIf="resourceForm.get('type').errors.required">O campo tipo é obrigatório</span>
-          </div>
+          <app-form-field-error [form-control]="resourceForm.get('type')"></app-form-field-error>
         </div>
 
         <!-- CATEGORIA -->
@@ -35,11 +32,7 @@
             <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
           </select>
 
-          <div class="text-danger" *ngIf="
-              resourceForm.get('categoryId').invalid && resourceForm.get('categoryId').touched
-            ">
-            <span *ngIf="resourceForm.get('categoryId').errors.required">O campo categoria é obrigatório</span>
-          </div>
+          <app-form-field-error [form-control]="resourceForm.get('categoryId')"></app-form-field-error>
         </div>
 
       </div>
@@ -52,13 +45,7 @@
           <p-calendar id="date" formControlName="date" inputStyleClass="form-control" dataType="string"
             dateFormat="dd/mm/yy" [locale]="ptBR" [showButtonBar]="true"></p-calendar>
 
-          <div class="text-danger" *ngIf="
-              resourceForm.get('date').invalid && resourceForm.get('date').touched
-            ">
-            <span *ngIf="resourceForm.get('date').errors.required">
-              O campo data é obrigatório
-            </span>
-          </div>
+          <app-form-field-error [form-control]="resourceForm.get('date')"></app-form-field-error>
         </div>
 
         <!-- VALOR  -->
@@ -76,11 +63,7 @@
             </div>
           </div>
 
-          <div class="text-danger" *ngIf="resourceForm.get('amount').invalid && resourceForm.get('amount').touched">
-            <span *ngIf="resourceForm.get('amount').errors.required">
-              O campo valor é obrigatório
-            </span>
-          </div>
+          <app-form-field-error [form-control]="resourceForm.get('amount')"></app-form-field-error>
         </div>
       </div>
 
@@ -101,11 +84,7 @@
             </label>
           </div>
 
-          <div class="text-danger" *ngIf="
-              resourceForm.get('paid').invalid && resourceForm.get('paid').touched
-            ">
-            <span *ngIf="resourceForm.get('paid').errors.required">O campo pago é obrigatório</span>
-          </div>
+          <app-form-field-error [form-control]="resourceForm.get('paid')"></app-form-field-error>
         </div>
       </div>
 
@@ -115,13 +94,7 @@
           <label for="name">Lançamento</label>
           <input type="text" class="form-control" id="name" formControlName="name" />
 
-          <div class="text-danger" *ngIf="
-              resourceForm.get('name').invalid && resourceForm.get('name').touched
-            ">
-            <span *ngIf="resourceForm.get('name').errors.required">O campo nome é obrigatório</span>
-            <span *ngIf="resourceForm.get('name').errors.minlength">O campo nome precisa ter pelo menos 3
-              caracteres</span>
-          </div>
+          <app-form-field-error [form-control]="resourceForm.get('name')"></app-form-field-error>
         </div>
       </div>
 
@@ -135,12 +108,7 @@
     </div>
   </div>
 
-  <div class="alert alert-danger mb-3" *ngIf="serverErrorMessages">
-    <strong>Erros no servidor:</strong>
-    <ul>
-      <li *ngFor="let error of serverErrorMessages">{{ error }}</li>
-    </ul>
-  </div>
+  <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
 
   <button [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary float-right">
     Salvar
