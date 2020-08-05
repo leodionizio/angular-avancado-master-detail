@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CategoriesModule } from './pages/categories/categories.module';
 import { EntriesModule } from './pages/entries/entries.module';
+import { ReportsModule } from './pages/reports/reports.module';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'entries',
     loadChildren: () => EntriesModule,
+  },
+  {
+    path: 'reports',
+    loadChildren: () => ReportsModule,
   },
 ];
 
